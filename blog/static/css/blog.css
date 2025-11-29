@@ -21,6 +21,15 @@ h4 {
     font-family: 'Lobster', cursive;
 }
 
+.preview {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* limit to 2 rows */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
 .date {
     color: #828282;
 }
