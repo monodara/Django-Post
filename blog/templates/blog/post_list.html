@@ -6,7 +6,10 @@
         {{ post.published_date }}
     </time>
     <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
-    <p class="preview">{{ post.text|linebreaksbr }}</p>
+    {% if post.subtitle %}
+        <h3>{{ post.subtitle }}</h3>
+    {% endif %}
+    <p class="preview">{{ post.text|striptags }}</p>
 </article>
 {% endfor %}
 {% endblock %}
