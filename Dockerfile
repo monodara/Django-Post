@@ -13,10 +13,12 @@ COPY . .
 
 # Environment variables
 ENV PYTHONUNBUFFERED=1
-ENV PORT=8080
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
-# Start the application
-CMD ["gunicorn", "myproject.wsgi:application", "--bind", "0.0.0.0:8080"]
+# Start the application - Use Google Run provided PORT
+CMD exec gunicorn myproject.wsgi:application \
+    --bind 0.0.0.0:$PORT \
+    --workers 2
+
