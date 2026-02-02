@@ -8,12 +8,12 @@
 {% block content %}
 <div class="container">
     <div class="row hero-section">
-        <div class="col-md-6 hero-text">
+        <div class="col-md-4 hero-text hero-text-adjusted">
             <h1>Hi, I'm <span class="highlight">Yuan</span>. I'm a</h1>
             <h2 class="professional">Software & AI Developer</h2><br>
             <a href="{% url 'portfolio:contact' %}" class="btn btn-primary contact-btn">Download My CV</a>
         </div>
-        <div class="col-md-6 hero-image-container">
+        <div class="col-md-7 hero-image-container">
             <div class="hero-image-blob">
                 <img src="{% static 'portfolio/portfolio_images/profile.jpg' %}" alt="Yuan" class="hero-image">
             </div>

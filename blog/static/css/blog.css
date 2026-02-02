@@ -1,5 +1,3 @@
-
-
 h1 {
     font-family: 'Lobster', cursive;
     color: #ffffff;
@@ -34,52 +32,98 @@ h4 {
     width: 100%;
 }
 
-.top-menu,
+.top-menu {
+    background-color: #2aaf75;
+    color: #ffffff;
+    border-radius: 8px;
+    /* Theme color */
+    font-size: 1.5rem;
+    /* Smaller size */
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    /* Space below */
+    display: inline-block;
+    /* Ensure margin works */
+    text-decoration: none;
+}
+
 .top-menu:hover,
 .top-menu:visited {
-    color: #ffffff;
-    float: right;
-    font-size: 26pt;
-    margin-right: 20px;
+    color: #228b5e;
+    /* Darker theme color on hover */
 }
 
 .post {
-    margin-bottom: 70px;
+    margin-bottom: 30px;
+    /* Reduced margin */
+    background-color: #f4fcf9;
+    /* Dark background for the post card */
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .post h2 a,
 .post h2 a:visited {
-    color: #2aaf75;
+    color: #333333;
+    /* Dark color for titles */
     text-decoration: none;
+    font-size: 2rem;
+    /* Larger title */
+    display: block;
+    /* Ensure it takes full width */
+    margin-bottom: 10px;
+}
+
+.post h2 a:hover {
+    color: #2aaf75;
+    /* Accent color on hover */
 }
 
 .post h3 {
     color: #aaaaaa;
-    font-size: 16pt;
+    font-size: 1.2rem;
+    /* Smaller subtitle */
+    margin-bottom: 15px;
+}
+
+.date {
+    color: #888888;
+    /* Lighter grey for date */
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    display: block;
 }
 
 .post>.date,
 .post>.actions {
-    float: right;
+    float: none;
+    /* Remove float for better card layout */
+    text-align: right;
+    /* Align date/actions to the right */
+    margin-bottom: 10px;
 }
 
-.btn-secondary,
-.btn-secondary:visited {
-    color: #2aaf75;
-    background: none;
-    border-color: #2aaf75;
-    margin-left: 15px;
-}
-
-.btn-secondary:hover {
-    color: #FFFFFF;
+.read-more-btn {
+    display: inline-block;
     background-color: #2aaf75;
+    color: #ffffff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.read-more-btn:hover {
+    background-color: #228b5e;
 }
 
 pre {
     background: #2d2d2d;
     border: 1px solid #ddd;
-    border-left: 3px solid #2aaf75; /* Use theme color for accent */
+    border-left: 3px solid #2aaf75;
+    /* Use theme color for accent */
     color: #cccccc;
     page-break-inside: avoid;
     font-family: monospace;
@@ -91,4 +135,79 @@ pre {
     padding: 1em 1.5em;
     display: block;
     word-wrap: break-word;
+}
+
+/* Common Navbar styles (dark theme compatible) */
+.navbar {
+    padding: 20px 0;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #ffffff !important;
+}
+
+.nav-link {
+    color: #ffffff !important;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.nav-link.active,
+.nav-link:hover {
+    color: #2aaf75 !important;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Navbar styles for light theme (overrides for blog pages) */
+body:not(.dark-theme) .navbar-brand {
+    color: #333333 !important;
+    /* Dark color for brand */
+}
+
+body:not(.dark-theme) .nav-link {
+    color: #555555 !important;
+    /* Darker color for links */
+}
+
+body:not(.dark-theme) .nav-link.active,
+body:not(.dark-theme) .nav-link:hover {
+    color: #2aaf75 !important;
+    /* Keep accent color */
+}
+
+body:not(.dark-theme) .navbar-toggler-icon {
+
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); /* Darker icon for light background */
+
+}
+
+
+
+.blog-header-actions {
+
+    max-width: 800px; /* Same as blog-posts-container */
+
+    margin: 0 auto 20px auto; /* Center and add bottom margin */
+
+    padding-left: 15px; /* Align with container content */
+
+    text-align: left;
+
+}
+
+
+
+.blog-posts-container {
+
+    max-width: 800px; /* Adjust as needed to match navbar content width */
+
+    margin: 0 auto; /* Center the container */
+
+    padding: 0 15px; /* Add padding to match container content */
+
 }
