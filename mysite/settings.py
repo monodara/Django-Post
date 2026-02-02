@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'blog',
     'portfolio',
     'django_ckeditor_5',
-    'storages', # Add storages app
 ]
 
 MIDDLEWARE = [
