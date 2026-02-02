@@ -19,7 +19,7 @@ ENV PORT=8080
 RUN python manage.py collectstatic --noinput
 
 # Start the application - Use Google Run provided PORT
-CMD exec gunicorn myproject.wsgi:application \
+CMD exec gunicorn mysite.wsgi:application \
     --bind 0.0.0.0:$PORT \
     --workers 2
 

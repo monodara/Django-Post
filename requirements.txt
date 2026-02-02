@@ -6,3 +6,4 @@ python-dotenv
 dj-database-url
 django-storages
 google-cloud-storage
+gunicorn
