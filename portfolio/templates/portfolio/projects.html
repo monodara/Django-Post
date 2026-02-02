@@ -1,5 +1,175 @@
 {% extends 'portfolio/portfolio_base.html' %}
+{% load static %}
 
 {% block content %}
-<h2>Projects</h2>
+<style>
+    .project-groups-container {
+        padding: 2rem;
+    }
+
+    .project-group {
+        margin-bottom: 3rem;
+    }
+
+    .project-group h2 {
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+        margin-bottom: 1.5rem;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+    }
+
+    .project-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        height: 600px; /* Fixed height for the entire card */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .project-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .project-card .carousel-item {
+        background-color: #f0f0f0; /* Background for letterboxing */
+    }
+
+    .project-card .carousel-item img {
+        height: 220px; /* Fixed height for the image */
+        object-fit: contain; /* Show full image, no distortion */
+    }
+
+    /* Custom styles for carousel controls */
+    .project-card .carousel-control-prev,
+    .project-card .carousel-control-next {
+        width: 40px;
+        height: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        margin: 0 10px;
+    }
+    .project-card .carousel-control-prev:hover,
+    .project-card .carousel-control-next:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .project-content {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1; /* Allows this section to fill available space */
+    }
+    
+    .project-title {
+        color: #333; /* Explicitly set color */
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .project-description {
+        height: 150px; /* Fixed height for description */
+        overflow-y: auto; /* Add scrollbar if content overflows */
+        margin-bottom: 1rem;
+    }
+
+    .project-tech {
+        margin-top: auto; /* Pushes tech stack to the bottom */
+        padding-top: 1rem;
+        border-top: 1px solid #eee;
+    }
+
+    .tech-badges-container {
+        height: 60px; /* Fixed height for the badges area */
+        overflow-y: auto; /* Add scrollbar if content overflows */
+    }
+
+    .tech-badge {
+        display: inline-block;
+        background-color: #e7e7e7;
+        color: #333;
+        padding: 0.3rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.8em;
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+</style>
+
+<div class="project-groups-container">
+    <p>Here are some of the projects I've worked on. Please feel free to explore them by clicking on each project card.
+    </p>
+
+    {% for group in project_groups %}
+    <section class="project-group">
+        <h2>{{ group.name }}</h2>
+        <div class="projects-grid">
+            {% for project in group.projects.all %}
+            <div class="project-card">
+                {% if project.images.all %}
+                <div id="carousel-{{ project.id }}" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        {% for p_image in project.images.all %}
+                        <button type="button" data-bs-target="#carousel-{{ project.id }}" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-inner">
+                        {% for p_image in project.images.all %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <img src="{{ p_image.image.url }}" class="d-block w-100" alt="Image for {{ project.title }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ project.id }}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ project.id }}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                {% endif %}
+                <div class="project-content">
+                    <h4 class="project-title">
+                        {{ project.title }}
+                        {% if project.github_link %}
+                            <a href="{{ project.github_link }}" target="_blank" class="btn btn-outline-secondary btn-sm" title="GitHub Repository">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        {% endif %}
+                    </h4>
+                    <div class="project-description">{{ project.description|safe }}</div>
+
+                    {% if project.technologies.all %}
+                    <div class="project-tech">
+                        <strong>Tech Stack:</strong>
+                        <div class="tech-badges-container">
+                            {% for tech in project.technologies.all %}
+                            <span class="tech-badge">{{ tech.name }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <p>No projects in this category yet. Please add some in the admin panel!</p>
+            {% endfor %}
+        </div>
+    </section>
+    {% empty %}
+    <p>No project groups found. Please add some project groups and projects in the admin panel.</p>
+    {% endfor %}
+</div>
 {% endblock %}

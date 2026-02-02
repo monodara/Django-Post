@@ -26,8 +26,14 @@ def education(request):
 def experience(request):
     return render(request, 'portfolio/experience.html')
 
+from .models import ProjectGroup
+
 def projects(request): 
-    return render(request, 'portfolio/projects.html') # 
+    project_groups = ProjectGroup.objects.prefetch_related(
+        'projects__technologies', 
+        'projects__images'
+    ).all()
+    return render(request, 'portfolio/projects.html', {'project_groups': project_groups})
 
 def hobbies(request):
     return render(request, 'portfolio/hobbies.html')
