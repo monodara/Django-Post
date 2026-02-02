@@ -11,9 +11,16 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file
+load_dotenv(BASE_DIR / '.env')
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -40,6 +47,7 @@ INSTALLED_APPS = [
     'blog',
     'portfolio',
     'django_ckeditor_5',
+    'storages', # Add storages app
 ]
 
 MIDDLEWARE = [
@@ -76,12 +84,21 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Default to SQLite if DATABASE_URL is not set
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(
+            conn_max_age=600,
+            ssl_require=True # Neon requires SSL
+        )
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -123,8 +140,21 @@ STATIC_ROOT = BASE_DIR / 'static'
 
 STATICFILES_DIRS = []
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# Google Cloud Storage for Media Files
+# Check if GCS settings are provided, otherwise fallback to local storage
+DEBUG = os.getenv("DEBUG", "True") == "True"
+
+if DEBUG:
+    # local development
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+else:
+    # Deployed Cloud Run
+    INSTALLED_APPS += ["storages"]
+
+    DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+    GS_BUCKET_NAME = os.getenv("GS_BUCKET_NAME", "your-bucket-name")
+    GS_DEFAULT_ACL = "publicRead"
 
 CKEDITOR_5_CONFIGS = {
     'default': {

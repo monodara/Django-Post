@@ -11,6 +11,8 @@ django/
 
 # Database
 db.sqlite3
+db.sqlite3.bak
+
 
 # Media folder for user uploads
 /media/
