@@ -3,11 +3,11 @@ h1 {
     color: #ffffff;
 }
 
-h2,
-h3,
-h4 {
+.blog-main-content h2,
+.blog-main-content h3,
+.blog-main-content h4 {
     font-family: sans-serif;
-    color: #333333; /* Changed from #ffffff to a darker color */
+    color: #333333; /* Dark color for blog content headings */
 }
 
 .preview {
