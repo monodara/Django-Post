@@ -4,10 +4,10 @@ h1 {
 }
 
 h2,
-/* h3, */
+h3,
 h4 {
     font-family: sans-serif;
-    color: #ffffff;
+    color: #333333; /* Changed from #ffffff to a darker color */
 }
 
 .preview {
